@@ -7,6 +7,7 @@ import {
   IOptions,
 } from "./components/core/ConfigOptions/initialOptionsConfig";
 import { shuffle } from "./utils/shuffle";
+import { PasswordStrength } from "./components/core/PasswordStrength/PasswordStrength";
 
 function App() {
   const [password, setPassword] = useState<string>("aXbCvv%s");
@@ -49,13 +50,21 @@ function App() {
           Password Generator
         </h1>
         <GeneratedPasswordContainer password={password} />
-        <ConfigOptions
-          configs={configs}
-          onConfigsChange={onConfigsChange}
-          passwordLength={passwordLength}
-          onPasswordLengthChange={setPasswordLength}
-          onGeneratePassword={generatePassword}
-        />
+        <div className="p-6 bg-bgSecondary mt-6 rounded-lg">
+          <ConfigOptions
+            configs={configs}
+            onConfigsChange={onConfigsChange}
+            passwordLength={passwordLength}
+            onPasswordLengthChange={setPasswordLength}
+          />
+          <PasswordStrength configs={configs} />
+          <button
+            className="mt-6 py-3 w-full text-2xl font-semibold text-black bg-ternaryText hover:bg-ternaryHover rounded-md"
+            onClick={generatePassword}
+          >
+            Generate
+          </button>
+        </div>
       </div>
     </div>
   );
