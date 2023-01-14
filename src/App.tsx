@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import { GeneratedPasswordContainer } from "./components/core/GeneratedPasswordContainer";
 import { ConfigOptions } from "./components/core/ConfigOptions/ConfigOptions";
@@ -6,6 +6,7 @@ import {
   initialOptionsConfig,
   IOptions,
 } from "./components/core/ConfigOptions/initialOptionsConfig";
+import { shuffle } from "./utils/shuffle";
 
 function App() {
   const [password, setPassword] = useState<string>("aXbCvv%s");
@@ -20,6 +21,27 @@ function App() {
     setConfigs(newConfig);
   };
 
+  const generatePassword = () => {
+    const numberPerGroup = Math.trunc(Number(passwordLength) / configs.length);
+    var tempPassword = "";
+    var allSelectedChars = "";
+
+    configs.forEach((options: IOptions) => {
+      if (options.value) {
+        tempPassword += options.chars.slice(0, numberPerGroup);
+        allSelectedChars += options.chars;
+      }
+    });
+
+    const numberOfCharToCompletePassword =
+      Number(passwordLength) - tempPassword.length;
+    const workingChars = allSelectedChars.slice(
+      0,
+      numberOfCharToCompletePassword
+    );
+    setPassword(shuffle(tempPassword + workingChars));
+  };
+
   return (
     <div className="App w-screen h-screen bg-black flex justify-center items-center">
       <div className="w-96 text-primaryText">
@@ -32,6 +54,7 @@ function App() {
           onConfigsChange={onConfigsChange}
           passwordLength={passwordLength}
           onPasswordLengthChange={setPasswordLength}
+          onGeneratePassword={generatePassword}
         />
       </div>
     </div>

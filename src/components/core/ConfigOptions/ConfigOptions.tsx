@@ -6,6 +6,7 @@ export interface ConfigOptionsProps {
   onConfigsChange: (newValue: IOptions, index: number) => void;
   passwordLength: string;
   onPasswordLengthChange: (password: string) => void;
+  onGeneratePassword: () => void;
 }
 
 export const ConfigOptions = ({
@@ -13,6 +14,7 @@ export const ConfigOptions = ({
   onConfigsChange,
   passwordLength,
   onPasswordLengthChange,
+  onGeneratePassword,
 }: ConfigOptionsProps): ReactElement => {
   return (
     <div className="p-6 bg-bgSecondary mt-6 rounded-lg">
@@ -24,7 +26,7 @@ export const ConfigOptions = ({
         className="py-6 w-full"
         type="range"
         min="5"
-        max="20"
+        max="15"
         value={passwordLength}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onPasswordLengthChange(e.target.value)
@@ -37,6 +39,7 @@ export const ConfigOptions = ({
               <input
                 className="w-6 h-6 my-2 mr-4"
                 type={options.type}
+                disabled={options.name === "lower" && true}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   onConfigsChange({ ...options, value: !options.value }, index)
                 }
@@ -46,6 +49,12 @@ export const ConfigOptions = ({
           </div>
         );
       })}
+      <button
+        className="mt-6 py-3 w-full text-2xl font-semibold text-black bg-ternaryText hover:bg-ternaryHover rounded-md"
+        onClick={onGeneratePassword}
+      >
+        Generate
+      </button>
     </div>
   );
 };
