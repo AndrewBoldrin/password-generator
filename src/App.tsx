@@ -1,25 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { GeneratedPasswordContainer } from "./components/core/GeneratedPasswordContainer";
+import { ConfigOptions } from "./components/core/ConfigOptions/ConfigOptions";
 import {
-  ConfigOptions,
-  IConfigs,
-} from "./components/core/ConfigOptions/ConfigOptions";
-
-const initialOptionsConfig = {
-  size: 10,
-  lower: true,
-  upper: false,
-  numbers: false,
-  symbols: false,
-};
+  initialOptionsConfig,
+  IOptions,
+} from "./components/core/ConfigOptions/initialOptionsConfig";
 
 function App() {
   const [password, setPassword] = useState<string>("aXbCvv%s");
-  const [configs, setConfigs] = useState<IConfigs>(initialOptionsConfig);
+  const [passwordLength, setPasswordLength] = useState<string>("10");
+  const [configs, setConfigs] = useState<IOptions[]>(initialOptionsConfig);
 
-  const onLengthChange = (newValue: number) => {
-    setConfigs({ ...configs, size: newValue });
+  const onConfigsChange = (newValue: any, newOptionIndex: number) => {
+    let newConfig = configs.map((value, index) => {
+      if (newOptionIndex === index) return newValue;
+      return value;
+    });
+    setConfigs(newConfig);
   };
 
   return (
@@ -29,7 +27,12 @@ function App() {
           Password Generator
         </h1>
         <GeneratedPasswordContainer password={password} />
-        <ConfigOptions configs={configs} onLengthChange={onLengthChange} />
+        <ConfigOptions
+          configs={configs}
+          onConfigsChange={onConfigsChange}
+          passwordLength={passwordLength}
+          onPasswordLengthChange={setPasswordLength}
+        />
       </div>
     </div>
   );
