@@ -1,6 +1,7 @@
 {
   "name": "password-generator",
   "private": true,
+  "homepage": "https://andrewboldrin.github.io/rememberme",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
