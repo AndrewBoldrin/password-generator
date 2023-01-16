@@ -29,14 +29,14 @@ function App() {
 
     configs.forEach((options: IOptions) => {
       if (options.value) {
-        tempPassword += options.chars.slice(0, numberPerGroup);
+        tempPassword += shuffle(options.chars).slice(0, numberPerGroup);
         allSelectedChars += options.chars;
       }
     });
 
     const numberOfCharToCompletePassword =
       Number(passwordLength) - tempPassword.length;
-    const workingChars = allSelectedChars.slice(
+    const workingChars = shuffle(allSelectedChars).slice(
       0,
       numberOfCharToCompletePassword
     );
