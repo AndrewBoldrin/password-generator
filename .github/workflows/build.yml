@@ -1,11 +1,10 @@
-name: password-generator build
+name: react password generator build
 
 on:
   push:
     branches:
       - master
 
-# env:
 env:
   CI: false
 
@@ -20,11 +19,11 @@ jobs:
       - name: Build
         run: |
           npm install --legacy-peer-deps
-          npm run-script build
+          npm run build
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: build
+          FOLDER: dist
